@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Deli Santa Maria · Event Proposal</title>
-<!-- html2pdf.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,7 +82,6 @@
   .btn-reset { background: transparent; color: var(--earth); border: 1px solid var(--hairline); }
   #pdf-output { position: absolute; left: -9999px; top: 0; width: 794px; background: #FFFFFF; padding: 50px 60px; color: var(--ink); font-family: var(--body); box-sizing: border-box; }
   .pdf-header { text-align: center; border-bottom: 2px solid var(--earth); padding-bottom: 24px; margin-bottom: 28px; }
-  .pdf-logo { height: 80px; margin-bottom: 16px; display: inline-block; }
   .pdf-logo-text { font-family: var(--display); font-size: 42px; color: var(--ink); line-height: 1; }
   .pdf-logo-text .deli { font-weight: 700; }
   .pdf-slogan { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--olive); margin-top: 8px; }
@@ -122,7 +119,16 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
   .logo-placeholder { width: 100%; height: 70px; background: var(--cream-darker); border: 1px dashed var(--soft); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 14px; margin-bottom: 12px; }
   @media (min-width: 480px) { .app { box-shadow: 0 0 40px rgba(0,0,0,0.06); } }
-  @media print { .footer-bar, .actions { display: none; } }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    html, body { background: #FFFFFF !important; padding: 0 !important; margin: 0 !important; }
+    .app, .footer-bar, .actions, .toast { display: none !important; }
+    #pdf-output { position: static !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: 100% !important; padding: 18mm 16mm !important; margin: 0 !important; background: #FFFFFF !important; visibility: visible !important; display: block !important; color: #2C2C2C !important; box-shadow: none !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    .pdf-section, .pdf-menu-category, .pdf-summary { break-inside: avoid; page-break-inside: avoid; }
+    .pdf-header { break-after: avoid; page-break-after: avoid; }
+    .pdf-footer { break-before: avoid; page-break-before: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -157,14 +163,14 @@
     <div id="beverages-container"></div>
   </section>
   <div class="actions">
-    <button class="btn" onclick="generatePDF()">📄 Generate PDF Proposal</button>
+    <button class="btn" onclick="generatePDF()">📄 Save as PDF</button>
     <button class="btn btn-reset" onclick="resetAll()">Clear All</button>
   </div>
 </div>
 <div class="footer-bar">
   <div class="footer-bar-inner">
     <div class="footer-total">Total<span class="amount" id="footer-total">€0</span></div>
-    <button class="btn" onclick="generatePDF()">Generate PDF</button>
+    <button class="btn" onclick="generatePDF()">Save as PDF</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -378,39 +384,17 @@ async function generatePDF(){
   if(grand===0){toast(state.lang==='ES'?'Añade al menos un plato':'Add at least one item');return;}
   const name=document.getElementById('client-name').value||'Client';
   const date=document.getElementById('client-date').value||new Date().toISOString().slice(0,10);
-  const fileName=COPY[state.lang].fileName+'_'+name.replace(/\s+/g,'_')+'_'+date+'.pdf';
+  const fileName=COPY[state.lang].fileName+'_'+name.replace(/\s+/g,'_')+'_'+date;
   const pdfOutput=document.getElementById('pdf-output');
   pdfOutput.innerHTML=buildPdfHTML();
-  toast(state.lang==='ES'?'Generando PDF…':'Generating PDF…');
-  try{
-    // Wait for fonts to be ready (Cormorant Garamond from Google Fonts)
-    if(document.fonts&&document.fonts.ready){await document.fonts.ready;}
-    // Wait a moment for the browser to lay out the content
-    await new Promise(resolve=>setTimeout(resolve,200));
-    // The #pdf-output element is positioned at left:-9999px via CSS,
-    // which keeps it off-screen but still in the DOM where html2canvas can find it.
-    // Do NOT set visibility:hidden -- it blocks html2canvas from rendering.
-    await html2pdf().set({
-      margin:0,
-      filename:fileName,
-      image:{type:'jpeg',quality:0.98},
-      html2canvas:{
-        scale:2,
-        useCORS:true,
-        logging:false,
-        windowWidth:794,
-        backgroundColor:'#FFFFFF',
-        scrollX:0,
-        scrollY:0,
-      },
-      jsPDF:{unit:'px',format:[794,1123],orientation:'portrait'},
-      pagebreak:{mode:['css','legacy']}
-    }).from(pdfOutput).save();
-    toast(state.lang==='ES'?'¡PDF listo!':'PDF ready!');
-  }catch(e){
-    console.error('PDF generation error:',e);
-    toast((state.lang==='ES'?'Error: ':'Error: ')+(e.message||'PDF generation failed'));
-  }
+  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
+  await new Promise(resolve=>setTimeout(resolve,100));
+  const originalTitle=document.title;
+  document.title=fileName;
+  toast(state.lang==='ES'?'Selecciona "Guardar como PDF"':'Choose "Save as PDF"');
+  await new Promise(resolve=>setTimeout(resolve,400));
+  window.print();
+  setTimeout(()=>{document.title=originalTitle;},2000);
 }
 document.getElementById('proposal-lang').addEventListener('change',(e)=>{state.lang=e.target.value;renderMenu();saveState();});
 ['client-name','client-date','client-guests','client-location','client-phone','client-time','proposal-lang'].forEach(id=>{
