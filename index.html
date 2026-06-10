@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deli Santa Maria · Event Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF5E8;
+    --cream-darker: #F0E8D2;
+    --earth: #8B6F47;
+    --earth-dark: #6B5435;
+    --olive: #6B7F4F;
+    --olive-dark: #4F5F38;
+    --ink: #2C2C2C;
+    --soft: #D4C5A0;
+    --hairline: #D8CFB8;
+    --white: #FFFFFF;
+    --danger: #B85C3C;
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --body: 'Inter', -apple-system, system-ui, sans-serif;
+    --radius: 8px;
+    --radius-sm: 4px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overscroll-behavior: contain; }
+  body { padding-bottom: 120px; }
+  .app { max-width: 440px; margin: 0 auto; background: var(--cream); min-height: 100vh; position: relative; }
+  .header { padding: 28px 20px 20px; text-align: center; border-bottom: 1px solid var(--hairline); }
+  .header h1 { font-family: var(--display); font-size: 34px; font-weight: 500; letter-spacing: -0.5px; color: var(--ink); line-height: 1; }
+  .header h1 .deli { font-weight: 700; }
+  .header .slogan { font-family: var(--display); font-style: italic; font-size: 17px; color: var(--olive); margin-top: 6px; letter-spacing: 0.5px; }
+  .header .subtitle { font-size: 12px; color: var(--earth); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
+  .section { padding: 24px 20px; border-bottom: 1px solid var(--hairline); }
+  .section-title { font-family: var(--display); font-size: 11px; font-weight: 600; color: var(--earth); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--earth); }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 11px; color: var(--ink); opacity: 0.65; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 500; }
+  .field input, .field select { width: 100%; background: var(--white); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 11px 12px; font-family: var(--body); font-size: 16px; color: var(--ink); -webkit-appearance: none; appearance: none; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--earth); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .category { margin-bottom: 8px; }
+  .category-header { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0 10px; border-bottom: 1px solid var(--hairline); margin-bottom: 8px; cursor: pointer; }
+  .category-name { font-family: var(--display); font-size: 22px; font-weight: 500; color: var(--ink); letter-spacing: 0.5px; }
+  .category-toggle { color: var(--earth); font-size: 18px; transition: transform 0.2s; }
+  .category.collapsed .category-toggle { transform: rotate(-90deg); }
+  .category.collapsed .category-items { display: none; }
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 10px 0; align-items: center; border-bottom: 1px dotted var(--hairline); }
+  .item:last-child { border-bottom: none; }
+  .item-info { min-width: 0; }
+  .item-name { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .item-meta { font-size: 12px; color: var(--ink); opacity: 0.55; margin-top: 2px; font-family: var(--body); }
+  .item-meta .price { color: var(--earth); font-weight: 600; opacity: 1; }
+  .stepper { display: flex; align-items: center; gap: 2px; background: var(--cream-darker); border-radius: var(--radius-sm); padding: 2px; }
+  .step-btn { width: 32px; height: 32px; border: none; background: transparent; color: var(--earth); font-size: 20px; font-weight: 600; cursor: pointer; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; transition: background 0.15s; font-family: var(--body); -webkit-user-select: none; user-select: none; }
+  .step-btn:active { background: var(--soft); }
+  .step-btn:disabled { color: var(--hairline); cursor: not-allowed; }
+  .step-qty { min-width: 36px; text-align: center; font-weight: 600; font-size: 15px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .item.has-qty { background: linear-gradient(90deg, rgba(107, 127, 79, 0.06) 0%, transparent 100%); }
+  .item.has-qty .item-name { color: var(--olive-dark); }
+  .footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); color: var(--cream); padding: 14px 20px; z-index: 100; box-shadow: 0 -8px 24px rgba(0,0,0,0.18); }
+  .footer-bar-inner { max-width: 440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+  .footer-total { font-family: var(--display); font-size: 13px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; }
+  .footer-total .amount { display: block; font-size: 26px; color: var(--cream); font-weight: 600; margin-top: 2px; font-family: var(--body); font-variant-numeric: tabular-nums; }
+  .btn { background: var(--olive); color: var(--cream); border: none; padding: 14px 22px; border-radius: var(--radius); font-family: var(--body); font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.15s, transform 0.1s; flex-shrink: 0; }
+  .btn:active { transform: scale(0.97); }
+  .btn-secondary { background: transparent; color: var(--cream); border: 1px solid var(--soft); padding: 10px 14px; font-size: 12px; }
+  .actions { padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 12px; }
+  .actions .btn { width: 100%; padding: 16px; font-size: 15px; }
+  .btn-reset { background: transparent; color: var(--earth); border: 1px solid var(--hairline); }
+  #pdf-output { position: absolute; left: -9999px; top: 0; width: 794px; background: #FFFFFF; padding: 50px 60px; color: var(--ink); font-family: var(--body); box-sizing: border-box; }
+  .pdf-header { text-align: center; padding-bottom: 28px; margin-bottom: 32px; position: relative; }
+  .pdf-header::after { content: ''; display: block; width: 80px; height: 1px; background: var(--earth); margin: 24px auto 0; }
+  .pdf-logo-img { width: 180px; height: 180px; display: block; margin: 0 auto 8px; object-fit: contain; }
+  .pdf-subtitle { font-family: var(--display); font-size: 14px; color: var(--earth); text-transform: uppercase; letter-spacing: 5px; margin-top: 18px; font-weight: 500; }
+  .pdf-section { margin-bottom: 24px; }
+  .pdf-section-title { font-family: var(--display); font-size: 18px; color: var(--earth); text-transform: uppercase; letter-spacing: 2px; padding-bottom: 6px; border-bottom: 1px solid var(--hairline); margin-bottom: 14px; font-weight: 600; }
+  .pdf-client-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+  .pdf-field { padding: 8px 0; }
+  .pdf-field-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--earth); margin-bottom: 2px; font-weight: 600; }
+  .pdf-field-value { font-size: 15px; color: var(--ink); font-weight: 500; }
+  .pdf-concept { background: var(--cream); padding: 22px 26px; border-left: 3px solid var(--olive); font-family: var(--display); font-size: 15px; line-height: 1.7; color: var(--ink); }
+  .pdf-concept p { margin-bottom: 10px; }
+  .pdf-concept p:last-child { margin-bottom: 0; }
+  .pdf-concept .em { font-style: italic; color: var(--olive-dark); }
+  .pdf-menu-category { margin-bottom: 18px; }
+  .pdf-category-name { font-family: var(--display); font-size: 18px; color: var(--ink); border-bottom: 1px solid var(--soft); padding-bottom: 4px; margin-bottom: 10px; font-weight: 600; }
+  .pdf-item { display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; padding: 7px 0; border-bottom: 1px dotted var(--hairline); font-size: 13px; }
+  .pdf-item:last-child { border-bottom: none; }
+  .pdf-item-name { font-weight: 500; }
+  .pdf-item-unit { color: var(--ink); opacity: 0.6; font-size: 12px; }
+  .pdf-item-qty { text-align: right; font-variant-numeric: tabular-nums; color: var(--earth); font-weight: 600; }
+  .pdf-item-total { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); min-width: 70px; }
+  .pdf-summary { background: var(--cream); padding: 20px 26px; border-radius: var(--radius); margin-top: 20px; }
+  .pdf-summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+  .pdf-summary-row.total { font-family: var(--display); font-size: 22px; color: var(--earth); font-weight: 600; border-top: 1px solid var(--earth); margin-top: 8px; padding-top: 14px; }
+  .pdf-summary-row.total .amount { font-family: var(--body); font-variant-numeric: tabular-nums; font-weight: 700; }
+  .pdf-how { font-size: 13px; line-height: 1.7; }
+  .pdf-how ul { list-style: none; padding: 0; }
+  .pdf-how li { padding: 4px 0; padding-left: 18px; position: relative; }
+  .pdf-how li::before { content: '·'; color: var(--olive); position: absolute; left: 6px; font-size: 22px; line-height: 1; top: -2px; }
+  .pdf-footer { text-align: center; margin-top: 36px; padding: 28px 24px 24px; border-top: 2px solid var(--earth); background: var(--cream); border-radius: 4px; }
+  .pdf-footer .closing-statement { font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--earth-dark); line-height: 1.4; letter-spacing: 0.3px; margin-bottom: 18px; }
+  .pdf-footer .closing-detail { font-family: var(--display); font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.6; margin-bottom: 18px; }
+  .pdf-footer .signature { margin-top: 14px; font-family: var(--display); font-style: normal; font-size: 22px; font-weight: 700; color: var(--earth); letter-spacing: 4px; text-transform: uppercase; }
+  .empty-prompt { text-align: center; padding: 60px 20px; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 16px; }
+  .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--olive); color: var(--cream); padding: 14px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 200; opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  .logo-placeholder { width: 100%; height: 70px; background: var(--cream-darker); border: 1px dashed var(--soft); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 14px; margin-bottom: 12px; }
+  @media (min-width: 480px) { .app { box-shadow: 0 0 40px rgba(0,0,0,0.06); } }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    html, body { background: #FFFFFF !important; padding: 0 !important; margin: 0 !important; }
+    .app, .footer-bar, .actions, .toast { display: none !important; }
+    #pdf-output { position: static !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: 100% !important; padding: 18mm 16mm !important; margin: 0 !important; background: #FFFFFF !important; visibility: visible !important; display: block !important; color: #2C2C2C !important; box-shadow: none !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    .pdf-section, .pdf-menu-category, .pdf-summary { break-inside: avoid; page-break-inside: avoid; }
+    .pdf-header { break-after: avoid; page-break-after: avoid; }
+    .pdf-footer { break-before: avoid; page-break-before: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="header">
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--ink); line-height: 1;"><span style="font-weight:700;">Deli</span> Santa Maria</div>
+    <div class="slogan">Fresh · Healthy · Happy</div>
+    <div class="subtitle">Event Proposal</div>
+  </header>
+  <section class="section">
+    <h2 class="section-title">Client Details</h2>
+    <div class="field">
+      <label for="client-name">Client name</label>
+      <input type="text" id="client-name" placeholder="Maria García">
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="client-date">Event date</label>
+        <input type="date" id="client-date">
+      </div>
+      <div class="field">
+        <label for="client-guests">Guests</label>
+        <input type="number" id="client-guests" min="1" placeholder="20">
+      </div>
+    </div>
+    <div class="field">
+      <label for="client-location">Location</label>
+      <input type="text" id="client-location" placeholder="Villa Binissalem">
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="client-phone">Phone / WhatsApp</label>
+        <input type="tel" id="client-phone" placeholder="+34 6...">
+      </div>
+      <div class="field">
+        <label for="client-time">Time of day</label>
+        <select id="client-time">
+          <option value="Morning">Morning</option>
+          <option value="Lunch" selected>Lunch</option>
+          <option value="Evening">Evening</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="proposal-lang">Proposal language</label>
+      <select id="proposal-lang">
+        <option value="EN" selected>English</option>
+        <option value="ES">Español</option>
+      </select>
+    </div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">The Table</h2>
+    <p style="font-size: 13px; color: var(--ink); opacity: 0.7; margin-bottom: 16px; font-style: italic;">
+      Tap <strong>+</strong> on each item to add to the table. Quantities depend on the event size.
+    </p>
+    <div id="menu-container"></div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">Beverages</h2>
+    <p style="font-size: 13px; color: var(--ink); opacity: 0.7; margin-bottom: 16px; font-style: italic;">
+      House bottles are 330ml. Lemonade is 1L. Water is 500ml. Wine bottles serve ~5.
+    </p>
+    <div id="beverages-container"></div>
+  </section>
+  <div class="actions">
+    <button class="btn" onclick="generatePDF()">📄 Save as PDF</button>
+    <button class="btn btn-reset" onclick="resetAll()">Clear All</button>
+  </div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-inner">
+    <div class="footer-total">
+      Total
+      <span class="amount" id="footer-total">€0</span>
+    </div>
+    <button class="btn" onclick="generatePDF()">Save as PDF</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div id="pdf-output"></div>
+<script>
+/* DELI SANTA MARIA — EVENT PROPOSAL APP */
+
+const DELI_LOGO = "data:image/png;base64,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";
+
+const MENU = {
+  food: [
+    { id: 'hummus', cat: 'Dips', name_en: 'Hummus', name_es: 'Hummus', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'baba', cat: 'Dips', name_en: 'Baba Ganoush', name_es: 'Baba Ganoush', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'tzatziki', cat: 'Dips', name_en: 'Tzatziki', name_es: 'Tzatziki', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'beetroot', cat: 'Dips', name_en: 'Beetroot Tahini', name_es: 'Tahini de Remolacha', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'green-tahini', cat: 'Dips', name_en: 'Green Tahini', name_es: 'Tahini Verde', unit_en: '100g · tahini, coriander, parsley, garlic', unit_es: '100g · tahini, cilantro, perejil, ajo', serves: 1, price: 3 },
+    { id: 'labneh', cat: 'Dips', name_en: 'Labneh', name_es: 'Labneh', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'matbucha', cat: 'Dips', name_en: 'Matbucha', name_es: 'Matbucha', unit_en: '100g', unit_es: '100g', serves: 1, price: 3 },
+    { id: 'abuela', cat: 'Dips', name_en: 'Abuela Eggplant Salad', name_es: 'Ensalada de Berenjena Abuela', unit_en: '100g · roasted eggplant with mayonnaise', unit_es: '100g · berenjena asada con mayonesa', serves: 1, price: 3 },
+    { id: 'beet-carpaccio', cat: 'Starters', name_en: 'Beet Carpaccio with Labneh', name_es: 'Carpaccio de Remolacha con Labneh', unit_en: 'thinly sliced beets with creamy labneh', unit_es: 'remolacha en lonchas finas con labneh cremoso', serves: 4, price: 18 },
+    { id: 'dolmades', cat: 'Starters', name_en: 'Dolmades', name_es: 'Dolmades', unit_en: '8 stuffed grape leaves with rice & herbs', unit_es: '8 hojas de parra rellenas con arroz y hierbas', serves: 4, price: 12 },
+    { id: 'cauliflower-bites', cat: 'Starters', name_en: 'Roasted Cauliflower Bites with Tahini & Dukkah', name_es: 'Coliflor Asada con Tahini y Dukkah', unit_en: 'golden florets, tahini sauce, dukkah spice', unit_es: 'ramilletes dorados, salsa tahini, especias dukkah', serves: 4, price: 24 },
+    { id: 'stuffed-peppers', cat: 'Starters', name_en: 'Stuffed Mini Peppers with Herbed Quinoa & Feta', name_es: 'Mini Pimientos Rellenos con Quinoa y Feta', unit_en: '6 sweet mini peppers, herbed quinoa, feta, lemon zest', unit_es: '6 mini pimientos dulces, quinoa con hierbas, feta, ralladura de limón', serves: 4, price: 24 },
+    { id: 'tabule', cat: 'Salads', name_en: 'Tabule', name_es: 'Tabulé', unit_en: '400g · bulgur, parsley, pomegranate, walnuts', unit_es: '400g · bulgur, perejil, granada, nueces', serves: 4, price: 18 },
+    { id: 'greek', cat: 'Salads', name_en: 'Greek Salad', name_es: 'Ensalada Griega', unit_en: '400g · lettuce, cucumbers, tomatoes, peppers, olives, feta', unit_es: '400g · lechuga, pepino, tomate, pimientos, aceitunas, feta', serves: 4, price: 18 },
+    { id: 'quinoa', cat: 'Salads', name_en: 'Quinoa Salad', name_es: 'Ensalada de Quinoa', unit_en: '400g · carrots, avocado, edamame, oranges, mint, almonds', unit_es: '400g · zanahoria, aguacate, edamame, naranja, menta, almendras', serves: 4, price: 18 },
+    { id: 'lentils-salad', cat: 'Salads', name_en: 'Lentils Salad', name_es: 'Ensalada de Lentejas', unit_en: '400g · black lentil, sweet potato, walnuts, cranberries', unit_es: '400g · lentejas negras, boniato, nueces, arándanos', serves: 4, price: 18 },
+    { id: 'beetroot-salad', cat: 'Salads', name_en: 'Beetroot Salad', name_es: 'Ensalada de Remolacha', unit_en: '400g · beetroot, apples, walnuts, mint', unit_es: '400g · remolacha, manzana, nueces, menta', serves: 4, price: 18 },
+    { id: 'vegetable-plate', cat: 'Salads', name_en: 'Vegetable Plate', name_es: 'Plato de Verduras', unit_en: '400g · cucumber, tomato, carrots, peppers, corn, olives, yogurt-mayo', unit_es: '400g · pepino, tomate, zanahoria, pimientos, maíz, aceitunas, mayo-yogur', serves: 4, price: 18 },
+    { id: 'cauliflower-salad', cat: 'Salads', name_en: 'Raw Cauliflower Salad with Lemon & Herbs', name_es: 'Ensalada de Coliflor Cruda con Limón y Hierbas', unit_en: 'crisp florets, zesty lemon, fresh herbs', unit_es: 'ramilletes crujientes, limón intenso, hierbas frescas', serves: 4, price: 18 },
+    { id: 'black-lentil-feta', cat: 'Salads', name_en: 'Black Lentil Salad with Feta', name_es: 'Ensalada de Lentejas Negras con Feta', unit_en: 'lentils, fresh vegetables, feta, zesty dressing', unit_es: 'lentejas, verduras frescas, feta, aliño intenso', serves: 4, price: 18 },
+    { id: 'pita-vegan', cat: 'Mini Pita Trays', name_en: 'The Vegan · Mini Pita Tray', name_es: 'The Vegan · Bandeja de Mini Pitas', unit_en: '10 pitas · hummus, eggplants, parsley, tomato OR beetroot tahini, cauliflower, carrots', unit_es: '10 pitas · hummus, berenjena, perejil, tomate O tahini de remolacha, coliflor, zanahoria', serves: 6, price: 45 },
+    { id: 'pita-vegi', cat: 'Mini Pita Trays', name_en: 'The Vegi · Mini Pita Tray', name_es: 'The Vegi · Bandeja de Mini Pitas', unit_en: '10 pitas · labane, roasted zucchini, dried tomato OR guacamole, feta, tomato', unit_es: '10 pitas · labane, calabacín asado, tomate seco O guacamole, feta, tomate', serves: 6, price: 45 },
+    { id: 'pita-eggi', cat: 'Mini Pita Trays', name_en: 'The Eggi · Mini Pita Tray', name_es: 'The Eggi · Bandeja de Mini Pitas', unit_en: '10 pitas · french omelette, cream cheese, tomato, spring onion OR egg salad, mayo, pickles', unit_es: '10 pitas · tortilla francesa, queso crema, tomate, cebolleta O ensaladilla de huevo, mayo, encurtidos', serves: 6, price: 45 },
+    { id: 'pita-cheesy', cat: 'Mini Pita Trays', name_en: 'The Cheesy · Mini Pita Tray', name_es: 'The Cheesy · Bandeja de Mini Pitas', unit_en: '10 pitas · gouda, feta, tomato OR labane, roasted zucchini, dried tomato', unit_es: '10 pitas · gouda, feta, tomate O labane, calabacín asado, tomate seco', serves: 6, price: 45 },
+    { id: 'schnitzel', cat: 'From Deli', name_en: 'Schnitzel', name_es: 'Schnitzel', unit_en: 'per piece · crispy coated chicken breast', unit_es: 'por pieza · pechuga de pollo crujiente', serves: 1, price: 4 },
+    { id: 'vegan-burger', cat: 'From Deli', name_en: 'The Vegan Burger', name_es: 'Hamburguesa Vegana', unit_en: 'per piece · sprouted lentils burger with hummus & salad', unit_es: 'por pieza · hamburguesa de lentejas germinadas con hummus y ensalada', serves: 1, price: 5 },
+    { id: 'kebeb', cat: 'From Deli', name_en: 'Kebeb', name_es: 'Kebab', unit_en: 'per piece · lamb & veal meatballs, onions, parsley', unit_es: 'por pieza · albóndigas de cordero y ternera, cebolla, perejil', serves: 1, price: 4 },
+    { id: 'falafel', cat: 'From Deli', name_en: 'Falafel', name_es: 'Falafel', unit_en: 'per portion · 4 balls', unit_es: 'por ración · 4 bolas', serves: 1, price: 5 },
+    { id: 'soup-pumpkin', cat: 'Soups', name_en: 'Pumpkin Soup', name_es: 'Sopa de Calabaza', unit_en: '1.5L · creamy roasted pumpkin with coconut milk & ginger', unit_es: '1.5L · calabaza asada cremosa con leche de coco y jengibre', serves: 6, price: 20 },
+    { id: 'soup-lentils', cat: 'Soups', name_en: 'Lentils Soup', name_es: 'Sopa de Lentejas', unit_en: '1.5L · slow-cooked lentils with vegetables & spices', unit_es: '1.5L · lentejas cocidas a fuego lento con verduras y especias', serves: 6, price: 20 },
+    { id: 'soup-greenpea', cat: 'Soups', name_en: 'Green Pea Soup', name_es: 'Sopa de Guisantes', unit_en: '1.5L · velvety green peas with aromatic herbs', unit_es: '1.5L · guisantes aterciopelados con hierbas aromáticas', serves: 6, price: 20 },
+    { id: 'energy-balls', cat: 'Sweets', name_en: 'Energy Balls', name_es: 'Bolas Energéticas', unit_en: 'per piece · dates, walnut, tahini/beetroot, almonds, coconut', unit_es: 'por pieza · dátiles, nueces, tahini/remolacha, almendras, coco', serves: 1, price: 2 },
+    { id: 'vegan-cheesecake', cat: 'Sweets', name_en: 'Vegan Cheese Cake', name_es: 'Tarta de Queso Vegana', unit_en: 'whole cake (6-8 servings) · cashew, coconut milk, red fruits, dates', unit_es: 'tarta entera (6-8 raciones) · anacardo, leche de coco, frutos rojos, dátiles', serves: 7, price: 54 },
+    { id: 'vegan-brownie', cat: 'Sweets', name_en: 'Vegan Cacao Brownie', name_es: 'Brownie Vegano de Cacao', unit_en: 'whole cake (6-8 servings) · sweet potato, cacao, almonds, walnuts · GF', unit_es: 'tarta entera (6-8 raciones) · boniato, cacao, almendras, nueces · sin gluten', serves: 7, price: 54 },
+    { id: 'malabi', cat: 'Sweets', name_en: 'Malabi', name_es: 'Malabi', unit_en: 'per portion · cold coconut milk pudding, rose water, nuts', unit_es: 'por ración · pudín frío de leche de coco, agua de rosas, nueces', serves: 1, price: 6.50 },
+    { id: 'truffles', cat: 'Sweets', name_en: 'Chocolate Truffles', name_es: 'Trufas de Chocolate', unit_en: 'per piece', unit_es: 'por pieza', serves: 1, price: 2 },
+  ],
+  beverages: [
+    { id: 'kombucha', cat: 'House Specials', name_en: 'Home Made Kombucha', name_es: 'Kombucha Casera', unit_en: 'bottle 330ml', unit_es: 'botella 330ml', serves: 1, price: 5.50 },
+    { id: 'icetea', cat: 'House Specials', name_en: 'Home Made Peach Ice Tea', name_es: 'Té Helado Melocotón Casero', unit_en: 'bottle 330ml', unit_es: 'botella 330ml', serves: 1, price: 5.50 },
+    { id: 'jamica', cat: 'House Specials', name_en: 'Home Made Flor de Jamaica', name_es: 'Flor de Jamaica Casera', unit_en: 'bottle 330ml', unit_es: 'botella 330ml', serves: 1, price: 5.50 },
+    { id: 'lemonade', cat: 'House Specials', name_en: 'Home Made Lemonade', name_es: 'Limonada Casera', unit_en: 'bottle 1L', unit_es: 'botella 1L', serves: 4, price: 10 },
+    { id: 'juice', cat: 'House Specials', name_en: 'Fresh Juice (per guest)', name_es: 'Zumo Fresco (por persona)', unit_en: 'apple / orange & carrot / pineapple / peach', unit_es: 'manzana / naranja y zanahoria / piña / melocotón', serves: 1, price: 2.50 },
+    { id: 'sparkling', cat: 'Water', name_en: 'Sparkling Water', name_es: 'Agua con Gas', unit_en: 'bottle 500ml', unit_es: 'botella 500ml', serves: 1, price: 3 },
+    { id: 'still', cat: 'Water', name_en: 'Still Water', name_es: 'Agua', unit_en: 'bottle 500ml', unit_es: 'botella 500ml', serves: 1, price: 2.50 },
+    { id: 'white-wine', cat: 'Wine', name_en: 'House White Wine', name_es: 'Vino Blanco de la Casa', unit_en: 'bottle', unit_es: 'botella', serves: 5, price: 18 },
+    { id: 'red-wine', cat: 'Wine', name_en: 'House Red Wine', name_es: 'Vino Tinto de la Casa', unit_en: 'bottle', unit_es: 'botella', serves: 5, price: 18 },
+    { id: 'mallorca-beer', cat: 'Beer', name_en: 'Mallorca Craft Beer', name_es: 'Cerveza Artesanal Mallorca', unit_en: 'per bottle', unit_es: 'por botella', serves: 1, price: 3.50 },
+    { id: 'tinto-verano', cat: 'Cocktails', name_en: 'Tinto de Verano', name_es: 'Tinto de Verano', unit_en: 'per cup', unit_es: 'por copa', serves: 1, price: 8.50 },
+    { id: 'mojito', cat: 'Cocktails', name_en: 'Mojito', name_es: 'Mojito', unit_en: 'per cocktail', unit_es: 'por cóctel', serves: 1, price: 8.50 },
+    { id: 'aperol', cat: 'Cocktails', name_en: 'Aperol Spritz', name_es: 'Aperol Spritz', unit_en: 'per cocktail', unit_es: 'por cóctel', serves: 1, price: 8.50 },
+    { id: 'gin-tonic', cat: 'Cocktails', name_en: 'Gin & Tonic', name_es: 'Gin & Tonic', unit_en: 'per cocktail', unit_es: 'por cóctel', serves: 1, price: 8.50 },
+    { id: 'hierbas', cat: 'Cocktails', name_en: 'Hierbas de Mallorca', name_es: 'Hierbas de Mallorca', unit_en: 'per glass', unit_es: 'por copa', serves: 1, price: 3.50 },
+    { id: 'vermouth', cat: 'Cocktails', name_en: 'Vermouth', name_es: 'Vermut', unit_en: 'per glass', unit_es: 'por copa', serves: 1, price: 4.50 },
+  ],
+};
+
+const FOOD_CATEGORIES = ['Dips', 'Starters', 'Salads', 'Mini Pita Trays', 'From Deli', 'Soups', 'Sweets'];
+const BEVERAGE_CATEGORIES = ['House Specials', 'Water', 'Wine', 'Beer', 'Cocktails'];
+
+const state = { quantities: {}, lang: 'EN' };
+
+const COPY = {
+  EN: {
+    sectionClient: 'Client Details', sectionTable: 'The Table', sectionBeverages: 'Beverages',
+    eventProposal: 'EVENT PROPOSAL', clientName: 'Client', eventDate: 'Date', location: 'Location',
+    guests: 'Guests', timeOfDay: 'Time', phone: 'Phone', theConcept: 'The Concept',
+    yourTable: 'Your Table', yourBeverages: 'Beverages', investment: 'Your Investment',
+    totalEvent: 'Total Event Price', howItWorks: 'How It Works', toReserve: 'To Reserve',
+    closingSlogan: 'Fresh · Healthy · Happy',
+    closingHeadline: "WE DON'T TAKE SHORTCUTS.",
+    closingDetail: "Every spread, salad, and tray is prepared in our family kitchen by the old church in Santa María del Camí.",
+    conceptText: [
+      'Food is better when shared.',
+      "At Deli Santa Maria, we don't prepare individual plates. We prepare tables.",
+      'Tables filled with colourful salads, fresh breads, homemade spreads, warm dishes, and the aromas of a Levantine family kitchen — recipes our family brought from the Levant to a Mallorcan village, prepared fresh and meant to be shared.',
+      'Food made for conversation. Food made for laughter. Food made for people gathering together.',
+      'We bring the table to you. You bring the people.'
+    ],
+    howItems: [
+      'Drop-off delivery — we bring your table to you, ready to serve.',
+      'Delivery fee depends on your location on the island and is added to the total.',
+      'Please book at least a few days in advance.',
+      '50% bank transfer required to confirm your booking.',
+      'Custom requests welcome — vegan, gluten-free, dietary needs.'
+    ],
+    reserveText: "WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    subtitle: "A Levantine family kitchen in Santa María del Camí",
+    quantity: 'Qty', total: 'Total', food: 'Food', beverages: 'Beverages',
+    fileName: 'Deli_Santa_Maria_Proposal',
+  },
+  ES: {
+    sectionClient: 'Datos del Cliente', sectionTable: 'La Mesa', sectionBeverages: 'Bebidas',
+    eventProposal: 'PROPUESTA DE EVENTO', clientName: 'Cliente', eventDate: 'Fecha',
+    location: 'Ubicación', guests: 'Invitados', timeOfDay: 'Hora', phone: 'Teléfono',
+    theConcept: 'El Concepto', yourTable: 'Tu Mesa', yourBeverages: 'Bebidas',
+    investment: 'Tu Inversión', totalEvent: 'Precio Total del Evento',
+    howItWorks: 'Cómo Funciona', toReserve: 'Para Reservar',
+    closingSlogan: 'Fresco · Sano · Feliz',
+    closingHeadline: 'NO TOMAMOS ATAJOS.',
+    closingDetail: 'Cada crema, ensalada y bandeja se prepara en nuestra cocina familiar junto a la iglesia vieja en Santa María del Camí.',
+    conceptText: [
+      'La comida sabe mejor cuando se comparte.',
+      'En Deli Santa Maria no preparamos platos individuales. Preparamos mesas.',
+      'Mesas llenas de ensaladas coloridas, panes recién hechos, cremas caseras, platos calientes y los aromas de una cocina familiar levantina — recetas que nuestra familia trajo del Levante a un pueblo de Mallorca, preparadas frescas y pensadas para compartir.',
+      'Comida para conversar. Comida para reír. Comida para reunirse.',
+      'Nosotros traemos la mesa. Tú traes a la gente.'
+    ],
+    howItems: [
+      'Entrega lista — traemos tu mesa preparada para servir.',
+      'El coste del transporte depende de tu ubicación en la isla y se añade al total.',
+      'Por favor reserva con al menos unos días de antelación.',
+      'Transferencia bancaria del 50% para confirmar tu reserva.',
+      'Peticiones especiales bienvenidas — vegano, sin gluten, dietéticas.'
+    ],
+    reserveText: "WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    subtitle: "Una cocina familiar levantina en Santa María del Camí",
+    quantity: 'Cant.', total: 'Total', food: 'Comida', beverages: 'Bebidas',
+    fileName: 'Deli_Santa_Maria_Propuesta',
+  }
+};
+
+function loadState() {
+  try { const saved = sessionStorage.getItem('deli-event-state'); if (saved) { const parsed = JSON.parse(saved); Object.assign(state, parsed); } } catch(e) {}
+}
+function saveState() {
+  try { sessionStorage.setItem('deli-event-state', JSON.stringify(state)); } catch(e) {}
+}
+
+function renderMenu() {
+  const lang = document.getElementById('proposal-lang').value;
+  state.lang = lang;
+  const foodContainer = document.getElementById('menu-container');
+  foodContainer.innerHTML = '';
+  FOOD_CATEGORIES.forEach(catName => {
+    const items = MENU.food.filter(item => item.cat === catName);
+    if (items.length === 0) return;
+    const catDiv = document.createElement('div');
+    catDiv.className = 'category';
+    catDiv.innerHTML = `<div class="category-header" onclick="toggleCategory(this)"><div class="category-name">${catName}</div><div class="category-toggle">▼</div></div><div class="category-items"></div>`;
+    const itemsDiv = catDiv.querySelector('.category-items');
+    items.forEach(item => { itemsDiv.appendChild(renderItem(item, 'food')); });
+    foodContainer.appendChild(catDiv);
+  });
+  const bevContainer = document.getElementById('beverages-container');
+  bevContainer.innerHTML = '';
+  BEVERAGE_CATEGORIES.forEach(catName => {
+    const items = MENU.beverages.filter(item => item.cat === catName);
+    if (items.length === 0) return;
+    const catDiv = document.createElement('div');
+    catDiv.className = 'category';
+    catDiv.innerHTML = `<div class="category-header" onclick="toggleCategory(this)"><div class="category-name">${catName}</div><div class="category-toggle">▼</div></div><div class="category-items"></div>`;
+    const itemsDiv = catDiv.querySelector('.category-items');
+    items.forEach(item => { itemsDiv.appendChild(renderItem(item, 'beverage')); });
+    bevContainer.appendChild(catDiv);
+  });
+  updateTotals();
+}
+
+function renderItem(item, type) {
+  const div = document.createElement('div');
+  div.className = 'item';
+  div.dataset.itemId = item.id;
+  div.dataset.itemType = type;
+  const qty = state.quantities[item.id] || 0;
+  if (qty > 0) div.classList.add('has-qty');
+  const name = state.lang === 'ES' ? item.name_es : item.name_en;
+  const unit = state.lang === 'ES' ? item.unit_es : item.unit_en;
+  div.innerHTML = `<div class="item-info"><div class="item-name">${name}</div><div class="item-meta">${unit} · <span class="price">€${item.price.toFixed(2)}</span></div></div><div class="stepper"><button class="step-btn" onclick="step('${item.id}', -1)">−</button><div class="step-qty" id="qty-${item.id}">${qty}</div><button class="step-btn" onclick="step('${item.id}', 1)">+</button></div>`;
+  return div;
+}
+
+function toggleCategory(headerEl) { headerEl.parentElement.classList.toggle('collapsed'); }
+
+function step(itemId, delta) {
+  const cur = state.quantities[itemId] || 0;
+  const next = Math.max(0, cur + delta);
+  state.quantities[itemId] = next;
+  const qtyEl = document.getElementById('qty-' + itemId);
+  if (qtyEl) qtyEl.textContent = next;
+  const itemEl = document.querySelector('[data-item-id="' + itemId + '"]');
+  if (itemEl) itemEl.classList.toggle('has-qty', next > 0);
+  updateTotals();
+  saveState();
+}
+
+function calcTotals() {
+  let foodTotal = 0, bevTotal = 0;
+  Object.entries(state.quantities).forEach(([id, qty]) => {
+    if (qty <= 0) return;
+    const foodItem = MENU.food.find(i => i.id === id);
+    const bevItem = MENU.beverages.find(i => i.id === id);
+    if (foodItem) foodTotal += foodItem.price * qty;
+    else if (bevItem) bevTotal += bevItem.price * qty;
+  });
+  return { foodTotal, bevTotal, grand: foodTotal + bevTotal };
+}
+
+function updateTotals() {
+  const { grand } = calcTotals();
+  document.getElementById('footer-total').textContent = '€' + grand.toFixed(0);
+}
+
+function resetAll() {
+  if (!confirm(state.lang === 'ES' ? '¿Borrar todo y empezar de nuevo?' : 'Clear everything and start fresh?')) return;
+  state.quantities = {};
+  ['client-name','client-date','client-guests','client-location','client-phone'].forEach(id => { document.getElementById(id).value = ''; });
+  saveState(); renderMenu(); toast(state.lang === 'ES' ? 'Limpiado' : 'Cleared');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function buildPdfHTML() {
+  const lang = state.lang;
+  const C = COPY[lang];
+  const { foodTotal, bevTotal, grand } = calcTotals();
+  const name = document.getElementById('client-name').value || '—';
+  const date = document.getElementById('client-date').value || '—';
+  const formattedDate = date !== '—' ? new Date(date).toLocaleDateString(lang === 'ES' ? 'es-ES' : 'en-GB', { day:'numeric', month:'long', year:'numeric'}) : '—';
+  const guests = document.getElementById('client-guests').value || '—';
+  const location = document.getElementById('client-location').value || '—';
+  const phone = document.getElementById('client-phone').value || '—';
+  const time = document.getElementById('client-time').value;
+  const selectedFood = MENU.food.filter(i => (state.quantities[i.id] || 0) > 0);
+  const selectedBev = MENU.beverages.filter(i => (state.quantities[i.id] || 0) > 0);
+  const groupByCategory = (items) => { const groups = {}; items.forEach(i => { if (!groups[i.cat]) groups[i.cat] = []; groups[i.cat].push(i); }); return groups; };
+  const foodGroups = groupByCategory(selectedFood);
+  const bevGroups = groupByCategory(selectedBev);
+  const renderItemRow = (item) => {
+    const qty = state.quantities[item.id];
+    const subtotal = qty * item.price;
+    const itemName = lang === 'ES' ? item.name_es : item.name_en;
+    const itemUnit = lang === 'ES' ? item.unit_es : item.unit_en;
+    return `<div class="pdf-item"><div class="pdf-item-name">${itemName} <span class="pdf-item-unit">· ${itemUnit}</span></div><div class="pdf-item-qty">×${qty}</div><div class="pdf-item-unit">@ €${item.price.toFixed(2)}</div><div class="pdf-item-total">€${subtotal.toFixed(2)}</div></div>`;
+  };
+  const renderGroupHTML = (groups, order) => {
+    if (Object.keys(groups).length === 0) return '';
+    return order.filter(cat => groups[cat]).map(cat => `<div class="pdf-menu-category"><div class="pdf-category-name">${cat}</div>${groups[cat].map(renderItemRow).join('')}</div>`).join('');
+  };
+  return `<div class="pdf-header"><img src="${DELI_LOGO}" alt="Deli Santa Maria" class="pdf-logo-img" /><div class="pdf-subtitle">${C.eventProposal}</div></div>
+<div class="pdf-section"><div class="pdf-client-grid"><div class="pdf-field"><div class="pdf-field-label">${C.clientName}</div><div class="pdf-field-value">${name}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.eventDate}</div><div class="pdf-field-value">${formattedDate}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.location}</div><div class="pdf-field-value">${location}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.guests}</div><div class="pdf-field-value">${guests}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.timeOfDay}</div><div class="pdf-field-value">${time}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.phone}</div><div class="pdf-field-value">${phone}</div></div></div></div>
+<div class="pdf-section"><div class="pdf-section-title">${C.theConcept}</div><div class="pdf-concept">${C.conceptText.map((line, idx) => idx === 0 ? '<p class="em">'+line+'</p>' : '<p>'+line+'</p>').join('')}</div></div>
+${selectedFood.length > 0 ? '<div class="pdf-section"><div class="pdf-section-title">'+C.yourTable+'</div>'+renderGroupHTML(foodGroups, FOOD_CATEGORIES)+'</div>' : ''}
+${selectedBev.length > 0 ? '<div class="pdf-section"><div class="pdf-section-title">'+C.yourBeverages+'</div>'+renderGroupHTML(bevGroups, BEVERAGE_CATEGORIES)+'</div>' : ''}
+<div class="pdf-section"><div class="pdf-section-title">${C.investment}</div><div class="pdf-summary">${foodTotal > 0 ? '<div class="pdf-summary-row"><span>'+C.food+'</span><span>€'+foodTotal.toFixed(2)+'</span></div>' : ''}${bevTotal > 0 ? '<div class="pdf-summary-row"><span>'+C.beverages+'</span><span>€'+bevTotal.toFixed(2)+'</span></div>' : ''}<div class="pdf-summary-row total"><span>${C.totalEvent}</span><span class="amount">€${grand.toFixed(2)}</span></div></div></div>
+<div class="pdf-section"><div class="pdf-section-title">${C.howItWorks}</div><div class="pdf-how"><ul>${C.howItems.map(item => '<li>'+item+'</li>').join('')}</ul></div></div>
+<div class="pdf-section"><div class="pdf-section-title">${C.toReserve}</div><div class="pdf-how" style="font-size:14px;text-align:center;padding:16px 0;">${C.reserveText.replace(/\n/g, '<br>')}</div></div>
+<div class="pdf-footer"><div class="closing-statement">${C.closingHeadline}</div><div class="closing-detail">${C.closingDetail}</div><div class="signature">${C.closingSlogan}</div></div>`;
+}
+
+async function generatePDF() {
+  const { grand } = calcTotals();
+  if (grand === 0) { toast(state.lang === 'ES' ? 'Añade al menos un plato' : 'Add at least one item'); return; }
+  const name = document.getElementById('client-name').value || 'Client';
+  const date = document.getElementById('client-date').value || new Date().toISOString().slice(0,10);
+  const fileName = COPY[state.lang].fileName + '_' + name.replace(/\s+/g,'_') + '_' + date;
+  const pdfOutput = document.getElementById('pdf-output');
+  pdfOutput.innerHTML = buildPdfHTML();
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(e) {} }
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const originalTitle = document.title;
+  document.title = fileName;
+  toast(state.lang === 'ES' ? 'Selecciona "Guardar como PDF"' : 'Choose "Save as PDF"');
+  await new Promise(resolve => setTimeout(resolve, 400));
+  window.print();
+  setTimeout(() => { document.title = originalTitle; }, 2000);
+}
+
+document.getElementById('proposal-lang').addEventListener('change', (e) => { state.lang = e.target.value; renderMenu(); saveState(); });
+
+['client-name','client-date','client-guests','client-location','client-phone','client-time','proposal-lang'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => { state[id] = el.value; saveState(); });
+});
+
+loadState();
+['client-name','client-date','client-guests','client-location','client-phone','client-time','proposal-lang'].forEach(id => {
+  if (state[id]) { const el = document.getElementById(id); if (el) el.value = state[id]; }
+});
+renderMenu();
+</script>
+</body>
+</html>
