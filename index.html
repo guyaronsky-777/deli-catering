@@ -84,6 +84,7 @@
   .btn-reset { background: transparent; color: var(--earth); border: 1px solid var(--hairline); }
   #pdf-output { position: absolute; left: -9999px; top: 0; width: 794px; background: #FFFFFF; padding: 50px 60px; color: var(--ink); font-family: var(--body); box-sizing: border-box; }
   .pdf-header { text-align: center; border-bottom: 2px solid var(--earth); padding-bottom: 24px; margin-bottom: 28px; }
+  .pdf-logo { height: 80px; margin-bottom: 16px; display: inline-block; }
   .pdf-logo-text { font-family: var(--display); font-size: 42px; color: var(--ink); line-height: 1; }
   .pdf-logo-text .deli { font-weight: 700; }
   .pdf-slogan { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--olive); margin-top: 8px; }
@@ -119,10 +120,12 @@
   .empty-prompt { text-align: center; padding: 60px 20px; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 16px; }
   .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--olive); color: var(--cream); padding: 14px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 200; opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  .logo-placeholder { width: 100%; height: 70px; background: var(--cream-darker); border: 1px dashed var(--soft); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 14px; margin-bottom: 12px; }
   @media (min-width: 480px) { .app { box-shadow: 0 0 40px rgba(0,0,0,0.06); } }
   @media print { .footer-bar, .actions { display: none; } }
 </style>
-</head><body>
+</head>
+<body>
 <div class="app" id="app">
   <header class="header">
     <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--ink); line-height: 1;"><span style="font-weight:700;">Deli</span> Santa Maria</div>
@@ -131,45 +134,17 @@
   </header>
   <section class="section">
     <h2 class="section-title">Client Details</h2>
-    <div class="field">
-      <label for="client-name">Client name</label>
-      <input type="text" id="client-name" placeholder="Maria García">
-    </div>
+    <div class="field"><label for="client-name">Client name</label><input type="text" id="client-name" placeholder="Maria García"></div>
     <div class="field-row">
-      <div class="field">
-        <label for="client-date">Event date</label>
-        <input type="date" id="client-date">
-      </div>
-      <div class="field">
-        <label for="client-guests">Guests</label>
-        <input type="number" id="client-guests" min="1" placeholder="20">
-      </div>
+      <div class="field"><label for="client-date">Event date</label><input type="date" id="client-date"></div>
+      <div class="field"><label for="client-guests">Guests</label><input type="number" id="client-guests" min="1" placeholder="20"></div>
     </div>
-    <div class="field">
-      <label for="client-location">Location</label>
-      <input type="text" id="client-location" placeholder="Villa Binissalem">
-    </div>
+    <div class="field"><label for="client-location">Location</label><input type="text" id="client-location" placeholder="Villa Binissalem"></div>
     <div class="field-row">
-      <div class="field">
-        <label for="client-phone">Phone / WhatsApp</label>
-        <input type="tel" id="client-phone" placeholder="+34 6...">
-      </div>
-      <div class="field">
-        <label for="client-time">Time of day</label>
-        <select id="client-time">
-          <option value="Morning">Morning</option>
-          <option value="Lunch" selected>Lunch</option>
-          <option value="Evening">Evening</option>
-        </select>
-      </div>
+      <div class="field"><label for="client-phone">Phone / WhatsApp</label><input type="tel" id="client-phone" placeholder="+34 6..."></div>
+      <div class="field"><label for="client-time">Time of day</label><select id="client-time"><option value="Morning">Morning</option><option value="Lunch" selected>Lunch</option><option value="Evening">Evening</option></select></div>
     </div>
-    <div class="field">
-      <label for="proposal-lang">Proposal language</label>
-      <select id="proposal-lang">
-        <option value="EN" selected>English</option>
-        <option value="ES">Español</option>
-      </select>
-    </div>
+    <div class="field"><label for="proposal-lang">Proposal language</label><select id="proposal-lang"><option value="EN" selected>English</option><option value="ES">Español</option></select></div>
   </section>
   <section class="section">
     <h2 class="section-title">The Table</h2>
@@ -264,10 +239,11 @@ const COPY = {
     yourBeverages:'Beverages',investment:'Your Investment',totalEvent:'Total Event Price',
     howItWorks:'How It Works',toReserve:'To Reserve',closingSlogan:'Fresh · Healthy · Happy',
     closing:"We don't take shortcuts. Every spread, salad, and tray is prepared in our family kitchen by the old church in Santa María del Camí.",
-    conceptText:['Food is better when shared.','At Deli Santa Maria, we don\'t prepare individual plates. We prepare tables.','Tables filled with colourful salads, fresh breads, homemade spreads, warm dishes, and the aromas of a Levantine family kitchen \u2014 recipes our family brought from the Levant to a Mallorcan village, prepared fresh and meant to be shared.','Food made for conversation. Food made for laughter. Food made for people gathering together.','We bring the table to you. You bring the people.'],
-    howItems:['Drop-off delivery \u2014 we bring your table to you, ready to serve.','No servers, no plates, no fuss.','Lead time: 5\u20137 days for confirmed bookings.','30% deposit confirms your event.','Custom requests welcome \u2014 vegan, gluten-free, dietary needs.'],
-    reserveText:'WhatsApp +34 628 00 80 66\nCarrer de l\'Església \u2014 Santa María del Camí',
-    subtitle:'A Levantine family kitchen in Santa María del Camí',quantity:'Qty',total:'Total',food:'Food',beverages:'Beverages',fileName:'Deli_Santa_Maria_Proposal',
+    conceptText:['Food is better when shared.',"At Deli Santa Maria, we don't prepare individual plates. We prepare tables.",'Tables filled with colourful salads, fresh breads, homemade spreads, warm dishes, and the aromas of a Levantine family kitchen — recipes our family brought from the Levant to a Mallorcan village, prepared fresh and meant to be shared.','Food made for conversation. Food made for laughter. Food made for people gathering together.','We bring the table to you. You bring the people.'],
+    howItems:['Drop-off delivery — we bring your table to you, ready to serve.','No servers, no plates, no fuss.','Lead time: 5–7 days for confirmed bookings.','30% deposit confirms your event.','Custom requests welcome — vegan, gluten-free, dietary needs.'],
+    reserveText:"WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    subtitle:"A Levantine family kitchen in Santa María del Camí",
+    quantity:'Qty',total:'Total',food:'Food',beverages:'Beverages',fileName:'Deli_Santa_Maria_Proposal',
   },
   ES: {
     sectionClient:'Datos del Cliente',sectionTable:'La Mesa',sectionBeverages:'Bebidas',
@@ -276,10 +252,11 @@ const COPY = {
     yourBeverages:'Bebidas',investment:'Tu Inversión',totalEvent:'Precio Total del Evento',
     howItWorks:'Cómo Funciona',toReserve:'Para Reservar',closingSlogan:'Fresco · Sano · Feliz',
     closing:'No tomamos atajos. Cada crema, ensalada y bandeja se prepara en nuestra cocina familiar junto a la iglesia vieja en Santa María del Camí.',
-    conceptText:['La comida sabe mejor cuando se comparte.','En Deli Santa Maria no preparamos platos individuales. Preparamos mesas.','Mesas llenas de ensaladas coloridas, panes recién hechos, cremas caseras, platos calientes y los aromas de una cocina familiar levantina \u2014 recetas que nuestra familia trajo del Levante a un pueblo de Mallorca, preparadas frescas y pensadas para compartir.','Comida para conversar. Comida para reír. Comida para reunirse.','Nosotros traemos la mesa. Tú traes a la gente.'],
-    howItems:['Entrega lista \u2014 traemos tu mesa preparada para servir.','Sin camareros, sin platos, sin complicaciones.','Tiempo de aviso: 5\u20137 días para reservas confirmadas.','Depósito del 30% confirma tu evento.','Peticiones especiales bienvenidas \u2014 vegano, sin gluten, dietéticas.'],
-    reserveText:'WhatsApp +34 628 00 80 66\nCarrer de l\'Església \u2014 Santa María del Camí',
-    subtitle:'Una cocina familiar levantina en Santa María del Camí',quantity:'Cant.',total:'Total',food:'Comida',beverages:'Bebidas',fileName:'Deli_Santa_Maria_Propuesta',
+    conceptText:['La comida sabe mejor cuando se comparte.','En Deli Santa Maria no preparamos platos individuales. Preparamos mesas.','Mesas llenas de ensaladas coloridas, panes recién hechos, cremas caseras, platos calientes y los aromas de una cocina familiar levantina — recetas que nuestra familia trajo del Levante a un pueblo de Mallorca, preparadas frescas y pensadas para compartir.','Comida para conversar. Comida para reír. Comida para reunirse.','Nosotros traemos la mesa. Tú traes a la gente.'],
+    howItems:['Entrega lista — traemos tu mesa preparada para servir.','Sin camareros, sin platos, sin complicaciones.','Tiempo de aviso: 5–7 días para reservas confirmadas.','Depósito del 30% confirma tu evento.','Peticiones especiales bienvenidas — vegano, sin gluten, dietéticas.'],
+    reserveText:"WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    subtitle:"Una cocina familiar levantina en Santa María del Camí",
+    quantity:'Cant.',total:'Total',food:'Comida',beverages:'Bebidas',fileName:'Deli_Santa_Maria_Propuesta',
   }
 };
 function loadState(){try{const s=sessionStorage.getItem('deli-event-state');if(s){Object.assign(state,JSON.parse(s));}}catch(e){}}
@@ -404,22 +381,35 @@ async function generatePDF(){
   const fileName=COPY[state.lang].fileName+'_'+name.replace(/\s+/g,'_')+'_'+date+'.pdf';
   const pdfOutput=document.getElementById('pdf-output');
   pdfOutput.innerHTML=buildPdfHTML();
-  pdfOutput.style.left='0';
-  pdfOutput.style.top='0';
-  pdfOutput.style.position='fixed';
-  pdfOutput.style.zIndex='-1';
-  pdfOutput.style.visibility='hidden';
   toast(state.lang==='ES'?'Generando PDF…':'Generating PDF…');
   try{
-    await html2pdf().set({margin:0,filename:fileName,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'px',format:[794,1123],orientation:'portrait'}}).from(pdfOutput).save();
+    // Wait for fonts to be ready (Cormorant Garamond from Google Fonts)
+    if(document.fonts&&document.fonts.ready){await document.fonts.ready;}
+    // Wait a moment for the browser to lay out the content
+    await new Promise(resolve=>setTimeout(resolve,200));
+    // The #pdf-output element is positioned at left:-9999px via CSS,
+    // which keeps it off-screen but still in the DOM where html2canvas can find it.
+    // Do NOT set visibility:hidden -- it blocks html2canvas from rendering.
+    await html2pdf().set({
+      margin:0,
+      filename:fileName,
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{
+        scale:2,
+        useCORS:true,
+        logging:false,
+        windowWidth:794,
+        backgroundColor:'#FFFFFF',
+        scrollX:0,
+        scrollY:0,
+      },
+      jsPDF:{unit:'px',format:[794,1123],orientation:'portrait'},
+      pagebreak:{mode:['css','legacy']}
+    }).from(pdfOutput).save();
     toast(state.lang==='ES'?'¡PDF listo!':'PDF ready!');
   }catch(e){
-    console.error(e);
-    toast(state.lang==='ES'?'Error al generar PDF':'PDF generation failed');
-  }finally{
-    pdfOutput.style.left='-9999px';
-    pdfOutput.style.position='absolute';
-    pdfOutput.style.visibility='visible';
+    console.error('PDF generation error:',e);
+    toast((state.lang==='ES'?'Error: ':'Error: ')+(e.message||'PDF generation failed'));
   }
 }
 document.getElementById('proposal-lang').addEventListener('change',(e)=>{state.lang=e.target.value;renderMenu();saveState();});
