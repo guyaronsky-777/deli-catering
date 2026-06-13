@@ -9,21 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FAF5E8;
-    --cream-darker: #F0E8D2;
-    --earth: #8B6F47;
-    --earth-dark: #6B5435;
-    --olive: #6B7F4F;
-    --olive-dark: #4F5F38;
-    --ink: #2C2C2C;
-    --soft: #D4C5A0;
-    --hairline: #D8CFB8;
-    --white: #FFFFFF;
-    --danger: #B85C3C;
+    --cream: #FAF5E8; --cream-darker: #F0E8D2; --earth: #8B6F47; --earth-dark: #6B5435;
+    --olive: #6B7F4F; --olive-dark: #4F5F38; --ink: #2C2C2C; --soft: #D4C5A0;
+    --hairline: #D8CFB8; --white: #FFFFFF; --danger: #B85C3C;
     --display: 'Cormorant Garamond', Georgia, serif;
     --body: 'Inter', -apple-system, system-ui, sans-serif;
-    --radius: 8px;
-    --radius-sm: 4px;
+    --radius: 8px; --radius-sm: 4px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overscroll-behavior: contain; }
@@ -31,7 +22,6 @@
   .app { max-width: 440px; margin: 0 auto; background: var(--cream); min-height: 100vh; position: relative; }
   .header { padding: 28px 20px 20px; text-align: center; border-bottom: 1px solid var(--hairline); }
   .header h1 { font-family: var(--display); font-size: 34px; font-weight: 500; letter-spacing: -0.5px; color: var(--ink); line-height: 1; }
-  .header h1 .deli { font-weight: 700; }
   .header .slogan { font-family: var(--display); font-style: italic; font-size: 17px; color: var(--olive); margin-top: 6px; letter-spacing: 0.5px; }
   .header .subtitle { font-size: 12px; color: var(--earth); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
   .section { padding: 24px 20px; border-bottom: 1px solid var(--hairline); }
@@ -59,7 +49,7 @@
   .step-btn:active { background: var(--soft); }
   .step-btn:disabled { color: var(--hairline); cursor: not-allowed; }
   .step-qty { min-width: 36px; text-align: center; font-weight: 600; font-size: 15px; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .item.has-qty { background: linear-gradient(90deg, rgba(107, 127, 79, 0.06) 0%, transparent 100%); }
+  .item.has-qty { background: linear-gradient(90deg, rgba(107,127,79,0.06) 0%, transparent 100%); }
   .item.has-qty .item-name { color: var(--olive-dark); }
   .footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); color: var(--cream); padding: 14px 20px; z-index: 100; box-shadow: 0 -8px 24px rgba(0,0,0,0.18); }
   .footer-bar-inner { max-width: 440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
@@ -67,23 +57,20 @@
   .footer-total .amount { display: block; font-size: 26px; color: var(--cream); font-weight: 600; margin-top: 2px; font-family: var(--body); font-variant-numeric: tabular-nums; }
   .btn { background: var(--olive); color: var(--cream); border: none; padding: 14px 22px; border-radius: var(--radius); font-family: var(--body); font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.15s, transform 0.1s; flex-shrink: 0; }
   .btn:active { transform: scale(0.97); }
-  .btn-secondary { background: transparent; color: var(--cream); border: 1px solid var(--soft); padding: 10px 14px; font-size: 12px; }
   .actions { padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 12px; }
   .actions .btn { width: 100%; padding: 16px; font-size: 15px; }
   .btn-reset { background: transparent; color: var(--earth); border: 1px solid var(--hairline); }
   #pdf-output { position: absolute; left: -9999px; top: 0; width: 794px; background: #FFFFFF; padding: 28px 60px 50px; color: var(--ink); font-family: var(--body); box-sizing: border-box; }
   .pdf-header { text-align: center; padding-bottom: 6px; margin-bottom: 6px; position: relative; margin-top: 0; }
   .pdf-header::after { content: ''; display: block; width: 80px; height: 1px; background: var(--earth); margin: 10px auto 0; }
-  .pdf-logo-img { width: 480px; height: auto; display: block; margin: 0 auto 10px; object-fit: contain; }
   .pdf-subtitle { font-family: var(--display); font-size: 14px; color: var(--earth); text-transform: uppercase; letter-spacing: 5px; margin-top: 8px; font-weight: 500; }
   .pdf-section { margin-bottom: 20px; }
   .pdf-section-title { font-family: var(--display); font-size: 18px; color: var(--earth); text-transform: uppercase; letter-spacing: 2px; padding-bottom: 6px; border-bottom: 1px solid var(--hairline); margin-bottom: 14px; font-weight: 600; }
-  .pdf-event-type-badge { text-align: center; font-family: var(--display); font-size: 11px; letter-spacing: 3px; color: var(--earth); text-transform: uppercase; margin-top: 6px; margin-bottom: 4px; }
   .pdf-client-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
   .pdf-field { padding: 3px 0; }
   .pdf-field-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--earth); margin-bottom: 2px; font-weight: 600; }
   .pdf-field-value { font-size: 15px; color: var(--ink); font-weight: 500; }
-  .pdf-concept { background: transparent; padding: 16px 0; border-left: none; font-family: var(--display); font-size: 17px; line-height: 1.85; color: var(--ink); }
+  .pdf-concept { background: transparent; padding: 16px 0; font-family: var(--display); font-size: 17px; line-height: 1.85; color: var(--ink); }
   .pdf-concept p { margin-bottom: 10px; }
   .pdf-concept p:last-child { margin-bottom: 0; }
   .pdf-concept .em { font-style: italic; color: var(--olive-dark); }
@@ -95,38 +82,30 @@
   .pdf-item-unit { color: var(--ink); opacity: 0.6; font-size: 12px; }
   .pdf-item-qty { text-align: right; font-variant-numeric: tabular-nums; color: var(--earth); font-weight: 600; }
   .pdf-item-total { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); min-width: 70px; }
-  .pdf-summary { background: transparent; padding: 20px 26px; border-radius: var(--radius); margin-top: 20px; }
-  .pdf-summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
-  .pdf-summary-row.total { font-family: var(--display); font-size: 22px; color: var(--earth); font-weight: 600; border-top: 1px solid var(--earth); margin-top: 8px; padding-top: 14px; }
-  .pdf-summary-row.total .amount { font-family: var(--body); font-variant-numeric: tabular-nums; font-weight: 700; }
   .pdf-how { font-size: 13px; line-height: 1.7; }
   .pdf-how ul { list-style: none; padding: 0; }
   .pdf-how li { padding: 4px 0; padding-left: 18px; position: relative; }
   .pdf-how li::before { content: '·'; color: var(--olive); position: absolute; left: 6px; font-size: 22px; line-height: 1; top: -2px; }
-  .pdf-footer { text-align: center; margin-top: 36px; padding: 28px 24px 40px; border-top: 1px solid var(--hairline); background: transparent; border-radius: 0; }
+  .pdf-footer { text-align: center; margin-top: 36px; padding: 28px 24px 40px; border-top: 1px solid var(--hairline); }
   .pdf-grand-total { display: flex; justify-content: space-between; align-items: baseline; margin: 24px 0 32px; padding: 20px 24px; border-top: 2px solid var(--earth); border-bottom: 2px solid var(--earth); }
   .pdf-grand-total-label { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--earth); text-transform: uppercase; letter-spacing: 2px; }
   .pdf-grand-total-amount { font-family: var(--body); font-size: 36px; font-weight: 700; color: var(--earth); font-variant-numeric: tabular-nums; }
   .pdf-footer .closing-statement { font-family: var(--display); font-size: 18px; font-weight: 400; font-style: italic; color: var(--ink); line-height: 1.6; letter-spacing: 0.2px; margin-bottom: 10px; }
   .pdf-footer .closing-detail { font-family: var(--display); font-style: italic; font-size: 16px; color: var(--ink); line-height: 1.7; margin-bottom: 18px; }
-  .pdf-footer .signature { margin-top: 14px; font-family: var(--display); font-style: italic; font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: 2px; text-transform: none; }
-  .empty-prompt { text-align: center; padding: 60px 20px; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 16px; }
+  .pdf-footer .signature { margin-top: 14px; font-family: var(--display); font-style: italic; font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: 2px; }
   .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--olive); color: var(--cream); padding: 14px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 200; opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-  .logo-placeholder { width: 100%; height: 70px; background: var(--cream-darker); border: 1px dashed var(--soft); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--earth); font-family: var(--display); font-style: italic; font-size: 14px; margin-bottom: 12px; }
   @media (min-width: 480px) { .app { box-shadow: 0 0 40px rgba(0,0,0,0.06); } }
   @page { size: A4 portrait; margin: 0; }
-  @page { margin-left: 0; margin-right: 0; }
-@media print {
+  @media print {
     html, body { background: #FFFFFF !important; padding: 0 !important; margin: 0 !important; }
     .app, .footer-bar, .actions, .toast { display: none !important; }
     #pdf-output { position: static !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; background: #FFFFFF !important; visibility: visible !important; display: block !important; color: #2C2C2C !important; box-shadow: none !important; box-sizing: border-box !important; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-    .pdf-menu-category, .pdf-item, .pdf-summary-row { break-inside: avoid; page-break-inside: avoid; }
+    .pdf-menu-category, .pdf-item { break-inside: avoid; page-break-inside: avoid; }
     .pdf-header { break-after: avoid; page-break-after: avoid; }
     .pdf-footer { break-before: auto; page-break-before: auto; padding-top: 8mm; }
   }
-  /* ── REPEATING HEADER VIA TABLE THEAD ── */
   .pdf-table-wrap { width: 100%; border-collapse: collapse; }
   .pdf-thead-logo { text-align: center; padding: 10mm 0 5mm; border-bottom: 1px solid #e8e0d0; background: #fff; width: 100%; display: block; }
   .pdf-thead-logo img { width: 320px; height: auto; display: block; margin: 0 auto 3mm; max-width: 100%; }
@@ -134,7 +113,6 @@
   .pdf-tbody-content { padding: 12mm 16mm 12mm; display: block; }
   @media print {
     .pdf-table-wrap { width: 100%; }
-    .pdf-thead-logo { text-align: center !important; }
     thead { display: table-header-group; }
     tbody { display: table-row-group; }
     .pdf-tbody-content { padding: 12mm 16mm 10mm; }
@@ -144,12 +122,12 @@
 <body>
 <div class="app" id="app">
   <header class="header">
-    <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--ink); line-height: 1;"><span style="font-weight:700;">Deli</span> Santa Maria</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--ink);line-height:1;"><span style="font-weight:700;">Deli</span> Santa Maria</div>
     <div class="slogan">Fresh · Healthy · Happy</div>
     <div class="subtitle">Event Proposal</div>
   </header>
   <section class="section" id="section-event-type">
-    <h2 class="section-title" id="event-type-label">Event Type</h2>
+    <h2 class="section-title">Event Type</h2>
     <div style="display:flex;gap:10px;margin-bottom:10px;">
       <button id="btn-delivery" onclick="setEventType('delivery')" style="flex:1;padding:13px 8px;border-radius:8px;border:2px solid var(--earth);background:var(--earth);color:var(--cream);font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.2s;">🚚  Delivery</button>
       <button id="btn-inhouse" onclick="setEventType('inhouse')" style="flex:1;padding:13px 8px;border-radius:8px;border:2px solid var(--earth);background:transparent;color:var(--earth);font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.2s;">🏠  In-House Event</button>
@@ -157,72 +135,44 @@
     <p id="inhouse-note" style="display:none;color:var(--earth);font-size:13px;font-style:italic;margin-top:4px;">Minimum 10 guests for In-House events.</p>
   </section>
   <section class="section" id="section-event-times" style="display:none;">
-    <h2 class="section-title" id="event-times-label">Event Times</h2>
+    <h2 class="section-title">Event Times</h2>
     <div class="field-row">
       <div class="field">
-        <label for="event-start-time" id="label-event-start">START TIME</label>
+        <label for="event-start-time">START TIME</label>
         <input type="time" id="event-start-time" oninput="state.eventStartTime=this.value;">
       </div>
       <div class="field">
-        <label for="event-end-time" id="label-event-end">END TIME</label>
+        <label for="event-end-time">END TIME</label>
         <input type="time" id="event-end-time" oninput="state.eventEndTime=this.value;">
       </div>
     </div>
   </section>
   <section class="section">
     <h2 class="section-title">Client Details</h2>
-    <div class="field">
-      <label for="client-name">Client name</label>
-      <input type="text" id="client-name" placeholder="Maria García">
-    </div>
+    <div class="field"><label for="client-name">Client name</label><input type="text" id="client-name" placeholder="Maria García"></div>
     <div class="field-row">
-      <div class="field">
-        <label for="client-date">Event date</label>
-        <input type="date" id="client-date">
-      </div>
-      <div class="field">
-        <label for="client-guests">Guests</label>
-        <input type="number" id="client-guests" min="1" placeholder="20">
-      </div>
+      <div class="field"><label for="client-date">Event date</label><input type="date" id="client-date"></div>
+      <div class="field"><label for="client-guests">Guests</label><input type="number" id="client-guests" min="1" placeholder="20"></div>
     </div>
-    <div class="field" id="field-location">
-      <label for="client-location">Location</label>
-      <input type="text" id="client-location" placeholder="Villa Binissalem">
-    </div>
+    <div class="field" id="field-location"><label for="client-location">Location</label><input type="text" id="client-location" placeholder="Villa Binissalem"></div>
     <div class="field-row">
-      <div class="field">
-        <label for="client-phone">Phone / WhatsApp</label>
-        <input type="tel" id="client-phone" placeholder="+34 6...">
-      </div>
-      <div class="field">
-        <label for="client-time">Time of day</label>
-        <select id="client-time">
-          <option value="Morning">Morning</option>
-          <option value="Lunch" selected>Lunch</option>
-          <option value="Evening">Evening</option>
-        </select>
+      <div class="field"><label for="client-phone">Phone / WhatsApp</label><input type="tel" id="client-phone" placeholder="+34 6..."></div>
+      <div class="field"><label for="client-time">Time of day</label>
+        <select id="client-time"><option value="Morning">Morning</option><option value="Lunch" selected>Lunch</option><option value="Evening">Evening</option></select>
       </div>
     </div>
-    <div class="field">
-      <label for="proposal-lang">Proposal language</label>
-      <select id="proposal-lang">
-        <option value="EN" selected>English</option>
-        <option value="ES">Español</option>
-      </select>
+    <div class="field"><label for="proposal-lang">Proposal language</label>
+      <select id="proposal-lang"><option value="EN" selected>English</option><option value="ES">Español</option></select>
     </div>
   </section>
   <section class="section">
     <h2 class="section-title">The Table</h2>
-    <p style="font-size: 13px; color: var(--ink); opacity: 0.7; margin-bottom: 16px; font-style: italic;">
-      Tap <strong>+</strong> on each item to add to the table. Quantities depend on the event size.
-    </p>
+    <p style="font-size:13px;color:var(--ink);opacity:0.7;margin-bottom:16px;font-style:italic;">Tap <strong>+</strong> on each item to add to the table.</p>
     <div id="menu-container"></div>
   </section>
   <section class="section">
     <h2 class="section-title">Beverages</h2>
-    <p style="font-size: 13px; color: var(--ink); opacity: 0.7; margin-bottom: 16px; font-style: italic;">
-      House bottles are 330ml. Lemonade is 1L. Water is 500ml. Wine bottles serve ~5.
-    </p>
+    <p style="font-size:13px;color:var(--ink);opacity:0.7;margin-bottom:16px;font-style:italic;">House bottles are 330ml. Lemonade is 1L. Water is 500ml. Wine bottles serve ~5.</p>
     <div id="beverages-container"></div>
   </section>
   <div class="actions">
@@ -232,10 +182,7 @@
 </div>
 <div class="footer-bar">
   <div class="footer-bar-inner">
-    <div class="footer-total">
-      Total
-      <span class="amount" id="footer-total">€0</span>
-    </div>
+    <div class="footer-total">Total<span class="amount" id="footer-total">€0</span></div>
     <button class="btn" onclick="generatePDF()">Save as PDF</button>
   </div>
 </div>
@@ -244,7 +191,7 @@
 <script>
 /* DELI SANTA MARIA — EVENT PROPOSAL APP */
 
-const DELI_LOGO = "data:image/jpeg;base64,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";
+const DELI_LOGO = "data:image/jpeg;base64,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";
 
 const MENU = {
   food: [
@@ -330,25 +277,20 @@ const MENU = {
 
 const FOOD_CATEGORIES = ['Dips', 'Starters', 'Salads', 'Pittas', 'Plates', 'Mini Pita Trays', 'From Deli', 'Trays', 'Soups', 'Extras', 'Sweets'];
 const BEVERAGE_CATEGORIES = ['House Specials', 'Water', 'Wine', 'Beer', 'Cocktails'];
-
 const state = { quantities: {}, lang: 'EN', eventType: 'delivery', eventStartTime: '', eventEndTime: '' };
 
 const COPY = {
   EN: {
-    sectionClient: 'Client Details', sectionTable: 'The Table', sectionBeverages: 'Beverages',
     eventProposal: 'EVENT PROPOSAL', clientName: 'Client', eventDate: 'Date', location: 'Location',
     guests: 'Guests', timeOfDay: 'Time', phone: 'Phone', theConcept: 'The Concept',
-    yourTable: 'Your Table', yourBeverages: 'Beverages', investment: 'Your Investment',
+    yourTable: 'Your Table', yourBeverages: 'Beverages',
     totalEvent: 'Total Event Price', howItWorks: 'How It Works', toReserve: 'To Reserve',
-    eventTypeLabel: 'Event Type',
-    eventTypeBtnDelivery: '🚚  Delivery',
-    eventTypeBtnInhouse: '🏠  Event at the Deli',
     eventTypeDelivery: 'Drop-off Delivery',
     eventTypeInhouse: 'Event · Deli Santa Maria',
     eventStart: 'START TIME', eventEnd: 'END TIME',
     minGuestsNote: 'Minimum 10 guests for In-House events.',
     inhouseItems: [
-      'Your event takes place at Deli Santa Maria, Carrer de l'Església 13, Santa María del Camí.',
+      'Your event takes place at Deli Santa Maria, Carrer de l’Església 13, Santa María del Camí.',
       'Tables, setup and full service included — we take care of everything.',
       'Please book at least one week in advance.',
       '50% bank transfer required to confirm your booking.',
@@ -372,27 +314,23 @@ const COPY = {
       '50% bank transfer required to confirm your booking.',
       'Custom requests welcome — vegan, gluten-free, dietary needs.'
     ],
-    reserveText: "WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    reserveText: "WhatsApp +34 628 00 80 66
+Carrer de l’Església — Santa María del Camí",
     subtitle: "A Levantine family kitchen in Santa María del Camí",
-    quantity: 'Qty', total: 'Total', food: 'Food', beverages: 'Beverages',
     fileName: 'Deli_Santa_Maria_Proposal',
   },
   ES: {
-    sectionClient: 'Datos del Cliente', sectionTable: 'La Mesa', sectionBeverages: 'Bebidas',
     eventProposal: 'PROPUESTA DE EVENTO', clientName: 'Cliente', eventDate: 'Fecha',
     location: 'Ubicación', guests: 'Invitados', timeOfDay: 'Hora', phone: 'Teléfono',
     theConcept: 'El Concepto', yourTable: 'Tu Mesa', yourBeverages: 'Bebidas',
-    investment: 'Tu Inversión', totalEvent: 'Precio Total del Evento',
+    totalEvent: 'Precio Total del Evento',
     howItWorks: 'Cómo Funciona', toReserve: 'Para Reservar',
-    eventTypeLabel: 'Tipo de Evento',
-    eventTypeBtnDelivery: '🚚  Entrega',
-    eventTypeBtnInhouse: '🏠  Evento en el Deli',
     eventTypeDelivery: 'Entrega a Domicilio',
     eventTypeInhouse: 'Evento · Deli Santa Maria',
     eventStart: 'HORA INICIO', eventEnd: 'HORA FIN',
     minGuestsNote: 'Mínimo 10 invitados para eventos en el Deli.',
     inhouseItems: [
-      'Tu evento tiene lugar en Deli Santa Maria, Carrer de l'Església 13, Santa María del Camí.',
+      'Tu evento tiene lugar en Deli Santa Maria, Carrer de l’Església 13, Santa María del Camí.',
       'Mesas, montaje y servicio completo incluidos — nosotros nos encargamos de todo.',
       'Por favor reserva con al menos una semana de antelación.',
       'Transferencia bancaria del 50% para confirmar tu reserva.',
@@ -416,9 +354,9 @@ const COPY = {
       'Transferencia bancaria del 50% para confirmar tu reserva.',
       'Peticiones especiales bienvenidas — vegano, sin gluten, dietéticas.'
     ],
-    reserveText: "WhatsApp +34 628 00 80 66\nCarrer de l'Església — Santa María del Camí",
+    reserveText: "WhatsApp +34 628 00 80 66
+Carrer de l’Església — Santa María del Camí",
     subtitle: "Una cocina familiar levantina en Santa María del Camí",
-    quantity: 'Cant.', total: 'Total', food: 'Comida', beverages: 'Bebidas',
     fileName: 'Deli_Santa_Maria_Propuesta',
   }
 };
@@ -570,22 +508,14 @@ function buildPdfHTML() {
     if (Object.keys(groups).length === 0) return '';
     return order.filter(cat => groups[cat]).map(cat => `<div class="pdf-menu-category"><div class="pdf-category-name">${cat}</div>${groups[cat].map(renderItemRow).join('')}</div>`).join('');
   };
-  return `<table class="pdf-table-wrap"><thead><tr><td class="pdf-thead-logo"><img src="${DELI_LOGO}" alt="Deli Santa Maria" /><div class="pdf-thead-tagline">${C.closingSlogan}</div></td></tr></thead><tbody><tr><td class="pdf-tbody-content"><div class="pdf-header"><div class="pdf-subtitle">${C.eventProposal}</div><div style="text-align:center;font-family:var(--display);font-size:10px;letter-spacing:3px;color:var(--earth);text-transform:uppercase;margin-top:4px;margin-bottom:2px;">${state.eventType === 'inhouse' ? (C.eventTypeInhouse||'In-House Event · Deli Santa Maria') : (C.eventTypeDelivery||'Drop-off Delivery')}</div></div>
-
-<div class="pdf-section"><div class="pdf-client-grid"><div class="pdf-field"><div class="pdf-field-label">${C.clientName}</div><div class="pdf-field-value">${name}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.eventDate}</div><div class="pdf-field-value">${formattedDate}</div></div>${state.eventType !== 'inhouse' ? `<div class="pdf-field"><div class="pdf-field-label">${C.location}</div><div class="pdf-field-value">${location}</div></div>` : `<div class="pdf-field"><div class="pdf-field-label">${C.eventStart||'START TIME'}</div><div class="pdf-field-value">${state.eventStartTime||'—'}${state.eventEndTime ? ' — '+state.eventEndTime : ''}</div></div>`}<div class="pdf-field"><div class="pdf-field-label">${C.guests}</div><div class="pdf-field-value">${guests}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.timeOfDay}</div><div class="pdf-field-value">${time}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.phone}</div><div class="pdf-field-value">${phone}</div></div></div></div>
-
+  return `<table class="pdf-table-wrap"><thead><tr><td class="pdf-thead-logo"><img src="${DELI_LOGO}" alt="Deli Santa Maria" /><div class="pdf-thead-tagline">${C.closingSlogan}</div></td></tr></thead><tbody><tr><td class="pdf-tbody-content"><div class="pdf-header"><div class="pdf-subtitle">${C.eventProposal}</div><div style="text-align:center;font-family:var(--display);font-size:10px;letter-spacing:3px;color:var(--earth);text-transform:uppercase;margin-top:4px;">${state.eventType === 'inhouse' ? (C.eventTypeInhouse||'Event · Deli Santa Maria') : (C.eventTypeDelivery||'Drop-off Delivery')}</div></div>
+<div class="pdf-section"><div class="pdf-client-grid"><div class="pdf-field"><div class="pdf-field-label">${C.clientName}</div><div class="pdf-field-value">${name}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.eventDate}</div><div class="pdf-field-value">${formattedDate}</div></div>${state.eventType !== 'inhouse' ? '<div class="pdf-field"><div class="pdf-field-label">'+C.location+'</div><div class="pdf-field-value">'+location+'</div></div>' : '<div class="pdf-field"><div class="pdf-field-label">'+(C.eventStart||'START TIME')+'</div><div class="pdf-field-value">'+(state.eventStartTime||'—')+(state.eventEndTime ? ' — '+state.eventEndTime : '')+'</div></div>'}<div class="pdf-field"><div class="pdf-field-label">${C.guests}</div><div class="pdf-field-value">${guests}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.timeOfDay}</div><div class="pdf-field-value">${time}</div></div><div class="pdf-field"><div class="pdf-field-label">${C.phone}</div><div class="pdf-field-value">${phone}</div></div></div></div>
 <div class="pdf-section"><div class="pdf-section-title">${C.theConcept}</div><div class="pdf-concept">${C.conceptText.map((line, idx) => idx === 0 ? '<p class="em">'+line+'</p>' : '<p>'+line+'</p>').join('')}</div></div>
-
 ${selectedFood.length > 0 ? '<div class="pdf-section"><div class="pdf-section-title">'+C.yourTable+'</div>'+renderGroupHTML(foodGroups, FOOD_CATEGORIES)+'</div>' : ''}
-
 ${selectedBev.length > 0 ? '<div class="pdf-section"><div class="pdf-section-title">'+C.yourBeverages+'</div>'+renderGroupHTML(bevGroups, BEVERAGE_CATEGORIES)+'</div>' : ''}
-
 <div class="pdf-grand-total"><div class="pdf-grand-total-label">${C.totalEvent.toUpperCase()}</div><div class="pdf-grand-total-amount">€${grand.toFixed(2)}</div></div>
-
-    <div class="pdf-section"><div class="pdf-section-title">${C.howItWorks}</div><div class="pdf-how"><ul>${(state.eventType === 'inhouse' ? (C.inhouseItems || []) : (C.howItems || [])).map(item => '<li>'+item+'</li>').join('')}</ul></div></div>
-
-<div class="pdf-section"><div class="pdf-section-title">${C.toReserve}</div><div class="pdf-how" style="font-size:14px;text-align:center;padding:16px 0;">${C.reserveText.replace(/\\n/g, '<br>')}</div></div>
-
+<div class="pdf-section"><div class="pdf-section-title">${C.howItWorks}</div><div class="pdf-how"><ul>${(state.eventType === 'inhouse' ? (C.inhouseItems || []) : (C.howItems || [])).map(item => '<li>'+item+'</li>').join('')}</ul></div></div>
+<div class="pdf-section"><div class="pdf-section-title">${C.toReserve}</div><div class="pdf-how" style="font-size:14px;text-align:center;padding:16px 0;">${C.reserveText.replace(/\n/g, '<br>')}</div></div>
 <div class="pdf-footer"><div class="closing-statement">${C.closingHeadline}</div><div class="closing-detail">${C.closingDetail}</div><div class="signature">${C.closingSlogan}</div></div></td></tr></tbody></table>`;
 }
 
@@ -594,7 +524,7 @@ async function generatePDF() {
   if (grand === 0) { toast(state.lang === 'ES' ? 'Añade al menos un plato' : 'Add at least one item'); return; }
   const name = document.getElementById('client-name').value || 'Client';
   const date = document.getElementById('client-date').value || new Date().toISOString().slice(0,10);
-  const fileName = COPY[state.lang].fileName + '_' + name.replace(/\s+/g,'_') + '_' + date;
+  const fileName = COPY[state.lang].fileName + '_' + name.replace(/s+/g,'_') + '_' + date;
   const pdfOutput = document.getElementById('pdf-output');
   pdfOutput.innerHTML = buildPdfHTML();
   if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(e) {} }
@@ -608,19 +538,15 @@ async function generatePDF() {
 }
 
 document.getElementById('proposal-lang').addEventListener('change', (e) => { state.lang = e.target.value; renderMenu(); saveState(); });
-
 ['client-name','client-date','client-guests','client-location','client-phone','client-time','proposal-lang'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('input', () => { state[id] = el.value; saveState(); });
 });
-
 loadState();
-
 ['client-name','client-date','client-guests','client-location','client-phone','client-time','proposal-lang'].forEach(id => {
   if (state[id]) { const el = document.getElementById(id); if (el) el.value = state[id]; }
 });
-
 renderMenu();
 </script>
 </body>
