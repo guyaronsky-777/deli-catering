@@ -314,8 +314,7 @@ const COPY = {
       '50% bank transfer required to confirm your booking.',
       'Custom requests welcome — vegan, gluten-free, dietary needs.'
     ],
-    reserveText: "WhatsApp +34 628 00 80 66
-Carrer de l’Església — Santa María del Camí",
+    reserveText: "WhatsApp +34 628 00 80 66<br>Carrer de l’Església — Santa María del Camí",
     subtitle: "A Levantine family kitchen in Santa María del Camí",
     fileName: 'Deli_Santa_Maria_Proposal',
   },
@@ -354,8 +353,7 @@ Carrer de l’Església — Santa María del Camí",
       'Transferencia bancaria del 50% para confirmar tu reserva.',
       'Peticiones especiales bienvenidas — vegano, sin gluten, dietéticas.'
     ],
-    reserveText: "WhatsApp +34 628 00 80 66
-Carrer de l’Església — Santa María del Camí",
+    reserveText: "WhatsApp +34 628 00 80 66<br>Carrer de l’Església — Santa María del Camí",
     subtitle: "Una cocina familiar levantina en Santa María del Camí",
     fileName: 'Deli_Santa_Maria_Propuesta',
   }
@@ -515,7 +513,7 @@ ${selectedFood.length > 0 ? '<div class="pdf-section"><div class="pdf-section-ti
 ${selectedBev.length > 0 ? '<div class="pdf-section"><div class="pdf-section-title">'+C.yourBeverages+'</div>'+renderGroupHTML(bevGroups, BEVERAGE_CATEGORIES)+'</div>' : ''}
 <div class="pdf-grand-total"><div class="pdf-grand-total-label">${C.totalEvent.toUpperCase()}</div><div class="pdf-grand-total-amount">€${grand.toFixed(2)}</div></div>
 <div class="pdf-section"><div class="pdf-section-title">${C.howItWorks}</div><div class="pdf-how"><ul>${(state.eventType === 'inhouse' ? (C.inhouseItems || []) : (C.howItems || [])).map(item => '<li>'+item+'</li>').join('')}</ul></div></div>
-<div class="pdf-section"><div class="pdf-section-title">${C.toReserve}</div><div class="pdf-how" style="font-size:14px;text-align:center;padding:16px 0;">${C.reserveText.replace(/\n/g, '<br>')}</div></div>
+<div class="pdf-section"><div class="pdf-section-title">${C.toReserve}</div><div class="pdf-how" style="font-size:14px;text-align:center;padding:16px 0;">${C.reserveText}</div></div>
 <div class="pdf-footer"><div class="closing-statement">${C.closingHeadline}</div><div class="closing-detail">${C.closingDetail}</div><div class="signature">${C.closingSlogan}</div></div></td></tr></tbody></table>`;
 }
 
